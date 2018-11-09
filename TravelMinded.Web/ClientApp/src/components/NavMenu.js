@@ -29,6 +29,11 @@ export default props => (
             <Glyphicon glyph='th-list' /> Fetch data
           </NavItem>
         </LinkContainer>
+        <LinkContainer to={'/experience'}>
+          <NavItem>
+           <Glyphicon glyph='th-camera' /> Experience
+          </NavItem>
+        </LinkContainer>
       </Nav>
     </Navbar.Collapse>
   </Navbar>
