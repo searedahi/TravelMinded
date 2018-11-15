@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Travel.Models;
 using TravelMinded.Service;
 
 namespace TravelMinded.Web.Controllers
@@ -17,12 +18,24 @@ namespace TravelMinded.Web.Controllers
 
         // GET: api/Experience
         [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet("[action]")]
+        public IEnumerable<IExperience> All()
         {
             var allExperiences = travelMindedService.GetExperiences();
-
-            return new string[] { "value1", "value2" };
+            return allExperiences;
         }
+
+
+        [HttpGet("[action]")]
+        public IEnumerable<IExperience> AvailableAfter(int startDateIndex)
+        {
+            var allExperiences = travelMindedService.GetExperiences();
+            return allExperiences;
+        }
+
+
+
+
 
         // GET: api/Experience/5
         [HttpGet("{id}", Name = "Get")]
