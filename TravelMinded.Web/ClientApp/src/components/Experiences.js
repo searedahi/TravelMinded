@@ -4,43 +4,13 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { actionCreators } from '../store/Experiences';
 import './Experiences.css';
-import { compose } from 'recompose';
-import { withStyles } from 'material-ui/styles';
-import { GridList } from 'material-ui/GridList';
-import { GridListTile } from 'material-ui/GridList/GridTile';
-import { GridListTileBar } from 'material-ui/GridList/GridList';
-import { IconButton } from 'material-ui/IconButton';
-import { StarBorderIcon } from 'material-ui/svg-icons/toggle/star-border';
+import { Col, Grid, Row } from 'react-bootstrap';
 
-const styles = theme => ({
-    root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'space-around',
-        overflow: 'hidden',
-        backgroundColor: theme.palette.background.paper
-    },
-    gridList: {
-        width: 500,
-        height: 450,
-        // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-        transform: 'translateZ(0)'
-    },
-    titleBar: {
-        background:
-            'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
-            'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)'
-    },
-    icon: {
-        color: 'white'
-    }
-});
 
 class Experiences extends Component {
 
     componentWillMount() {
         // This method runs when the component is first added to the page
-        const startDateIndex = parseInt(this.props.match.params.startDateIndex, 10) || 0;
         this.isLoading = true;
         this.props.loadAllExperiences();
     }
@@ -64,32 +34,21 @@ class Experiences extends Component {
 }
 
 function renderExperiencesTable(props) {
-    const { classes } = props;
-
     return (
 
-        <div className={classes.root}>
-            <GridList cellHeight={200} spacing={1} className={classes.gridList}>
-                {props.experiences.map(tile => (
-                    <GridListTile key={tile.imageCdnUrl} cols={tile.featured ? 2 : 1} rows={tile.featured ? 2 : 1}>
-                        <img src={tile.imageCdnUrl} alt={tile.name} />
-                        <GridListTileBar
-                            title={tile.name}
-                            titlePosition="top"
-                            actionIcon={
-                                <IconButton className={classes.icon}>
-                                    <StarBorderIcon />
-                                </IconButton>
-                            }
-                            actionPosition="left"
-                            className={classes.titleBar}
-                        />
-                    </GridListTile>
-                ))}
-            </GridList>
-        </div>
+        <Row>
+            {props.experiences.map(experience =>
+                <Col sm={12} md={6} lg={6} >
+                    <div class="experienceWrap" style={{ backgroundImage: `url(${experience.imageCdnUrl === '' ? 'https://cdn.cnn.com/cnnnext/dam/assets/151030143154-burt-reynolds-smokey-and-the-bandit-full-169.jpg' : experience.imageCdnUrl})` }} >
+                        <h3>{experience.name}</h3>
+                    </div>
+                </Col>
+            )}
+        </Row>
     );
 }
+
+
 
 
 function renderPagination(props) {
@@ -102,7 +61,4 @@ function renderPagination(props) {
         {props.isLoading ? <span>Loading...</span> : []}
     </p>;
 }
-export default compose(
-    withStyles(styles, {name:'Experiences'})
-    , connect(state => state.experiences, dispatch => bindActionCreators(actionCreators, dispatch))
-)(Experiences);
+export default connect(state => state.experiences, dispatch => bindActionCreators(actionCreators, dispatch))(Experiences);

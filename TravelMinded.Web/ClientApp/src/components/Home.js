@@ -1,8 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Col, Grid, Row } from 'react-bootstrap';
+
 
 const Home = props => (
-  <div>
+
+
+
+
+
+    <div>
+
     <h1>Hello, world!</h1>
     <p>Welcome to your new single-page application, built with:</p>
     <ul>
