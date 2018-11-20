@@ -5,7 +5,7 @@ import Home from './components/Home';
 import Counter from './components/Counter';
 import FetchData from './components/FetchData';
 import Experiences from './components/Experiences';
-import Experience from './components/Experience';
+import ExperienceDetails from './components/ExperienceDetails';
 
 export default () => (
     <Layout>
@@ -13,6 +13,8 @@ export default () => (
         <Route path='/counter' component={Counter} />
         <Route path='/fetchdata/:startDateIndex?' component={FetchData} />
         <Route path='/experiences' component={Experiences} />
-        <Route path='/experience/:id' component={Experience} />
+        <Route path='/experience/:id' component={ExperienceDetails} />
+        <Route path='/experiencedetails/:id' component={ExperienceDetails} />
+
     </Layout>
 );

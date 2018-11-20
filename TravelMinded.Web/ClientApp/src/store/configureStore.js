@@ -4,14 +4,14 @@ import { routerReducer, routerMiddleware } from 'react-router-redux';
 import * as Counter from './Counter';
 import * as WeatherForecasts from './WeatherForecasts';
 import * as Experiences from './Experiences';
-import * as Experience from './Experience';
+import * as ExperienceDetails from './ExperienceDetails';
 
 export default function configureStore(history, initialState) {
     const reducers = {
         counter: Counter.reducer,
         weatherForecasts: WeatherForecasts.reducer,
         experiences: Experiences.reducer,
-        experience:Experience.reducer
+        experienceDetails:ExperienceDetails.reducer
     };
 
     const middleware = [

@@ -1,11 +1,11 @@
 ﻿const requestExperienceDetailsType = 'REQUEST_EXPERIENCE_DETAILS';
 const receiveExperienceDetailsType = 'RECEIVE_EXPERIENCE_DETAILS';
 
-const initialState = { experience: null, isLoading: false};
+const initialState = { experienceDetails: {}, isLoading: false };
 
-export const experienceActionCreators = {
-    getExperience: id => async (dispatch, getState) => {
-        if (id === getState().experience.id) {
+export const experienceDetailsActionCreators = {
+    getExperienceDetails: id => async (dispatch, getState) => {
+        if (id === getState().experienceDetails.id) {
             // Don't issue a duplicate request (we already have or are loading the requested data)
             return;
         }
@@ -14,9 +14,9 @@ export const experienceActionCreators = {
 
         const url = `api/Experience/${id}`;
         const response = await fetch(url);
-        const experience = await response.json();
+        const experienceDetails = await response.json();
 
-        dispatch({ type: receiveExperienceDetailsType, experience });
+        dispatch({ type: receiveExperienceDetailsType, experienceDetails });
     }
 };
 
@@ -34,7 +34,7 @@ export const reducer = (state, action) => {
     if (action.type === receiveExperienceDetailsType) {
         return {
             ...state,
-            experience: action.experience,
+            experienceDetails: action.experienceDetails,
             isLoading: false
         };
     }

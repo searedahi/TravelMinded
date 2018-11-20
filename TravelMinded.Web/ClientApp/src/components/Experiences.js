@@ -21,8 +21,6 @@ class Experiences extends Component {
         this.props.requestExperiences(startDateIndex);
     }
 
-
-
     render() {
         return (
             renderExperiencesTable(this.props.experiences)
