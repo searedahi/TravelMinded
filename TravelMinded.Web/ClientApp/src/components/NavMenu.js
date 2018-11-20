@@ -8,31 +8,31 @@ export default props => (
   <Navbar inverse fixedTop fluid collapseOnSelect>
     <Navbar.Header>
       <Navbar.Brand>
-        <Link to={'/'}>TravelMinded.Web</Link>
+                <Link to={'/'}><img src="/logos/travel_minded_white.png" className="navbarImg"/>   </Link>
       </Navbar.Brand>
       <Navbar.Toggle />
     </Navbar.Header>
     <Navbar.Collapse>
       <Nav>
-        <LinkContainer to={'/'} exact>
+        <LinkContainer to={'/lodgings'}>
           <NavItem>
-            <Glyphicon glyph='home' /> Home
-          </NavItem>
-        </LinkContainer>
-        <LinkContainer to={'/counter'}>
-          <NavItem>
-            <Glyphicon glyph='education' /> Counter
-          </NavItem>
-        </LinkContainer>
-        <LinkContainer to={'/fetchdata'}>
-          <NavItem>
-            <Glyphicon glyph='th-list' /> Fetch data
+            <Glyphicon glyph='home' /> Lodgings
           </NavItem>
         </LinkContainer>
         <LinkContainer to={'/experiences'}>
           <NavItem>
            <Glyphicon glyph='camera' /> Experiences
           </NavItem>
+        </LinkContainer>
+        <LinkContainer to={'/cart'}>
+            <NavItem>
+                <Glyphicon glyph='shopping-cart' /> Cart
+            </NavItem>
+        </LinkContainer>
+        <LinkContainer to={'/profile'}>
+            <NavItem>
+                <Glyphicon glyph='user' /> Profile
+            </NavItem>
         </LinkContainer>
       </Nav>
     </Navbar.Collapse>

@@ -30,8 +30,6 @@ export const actionCreators = {
 
         dispatch({ type: receiveExperiencesTypeAll, experiences });
     }
-
-
 };
 
 export const reducer = (state, action) => {

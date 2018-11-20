@@ -39,9 +39,10 @@ namespace TravelMinded.Web.Controllers
 
         // GET: api/Experience/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public IExperience Get(int id)
         {
-            return "value";
+            var exp = travelMindedService.GetExperience(id);
+            return exp;
         }
 
         //// GET: api/Experience/BodyGlove

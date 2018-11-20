@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { actionCreators } from '../store/Experiences';
 import './Experiences.css';
-import { Col, Grid, Row } from 'react-bootstrap';
+import { Col, Grid, Row, Button, Carousel } from 'react-bootstrap';
 
 
 class Experiences extends Component {
@@ -21,34 +21,63 @@ class Experiences extends Component {
         this.props.requestExperiences(startDateIndex);
     }
 
+
+
     render() {
         return (
-            <div>
-                <h1>All Experiences</h1>
-                <p>By land, sea or air.  We've got you covered.</p>
-                {renderExperiencesTable(this.props)}
-                {renderPagination(this.props)}
-            </div>
+            renderExperiencesTable(this.props.experiences)
         );
     }
 }
 
-function renderExperiencesTable(props) {
+function renderExperiencesTable(experiences) {
     return (
 
         <Row>
-            {props.experiences.map(experience =>
-                <Col sm={12} md={6} lg={6} >
-                    <div class="experienceWrap" style={{ backgroundImage: `url(${experience.imageCdnUrl === '' ? 'https://cdn.cnn.com/cnnnext/dam/assets/151030143154-burt-reynolds-smokey-and-the-bandit-full-169.jpg' : experience.imageCdnUrl})` }} >
-                        <h3>{experience.name}</h3>
-                    </div>
+            {experiences.map(experience =>
+                <Col sm={12} md={6} lg={4} >
+                    <Carousel indicators={false} controls={false} wrap={true}>
+                        <Carousel.Item className="carouselItemWrapper" >
+                            <Link to={`experience/${experience.id}`}>
+                                <img
+                                    className="experiencesImg"
+                                    alt="A generic snapshot of the experience."
+                                    src={experience.imageCdnUrl === '' ? 'https://localhost:44307/images/island(35).jpg' : experience.imageCdnUrl} />
+                                <Carousel.Caption>
+                                    <h3>{experience.name}</h3>
+                                    <p>{experience.descriptionShort}</p>
+                                </Carousel.Caption>
+                            </Link>
+                        </Carousel.Item>
+                        {renderImages(experience)}
+                    </Carousel>
                 </Col>
             )}
         </Row>
     );
 }
 
+function renderImages(experience) {
 
+    var imgList = experience.images;
+
+    return (
+       imgList.map(image =>
+            <Carousel.Item className="carouselItemWrapper" >
+                <Link to={`experience/${experience.id}`}>
+                    <img
+                        className="experiencesImg"
+                        alt="A generic snapshot of the experience."
+                        src={image.imageCdnUrl === '' ? 'https://cdn.cnn.com/cnnnext/dam/assets/151030143154-burt-reynolds-smokey-and-the-bandit-full-169.jpg' : image.imageCdnUrl} />
+                    <Carousel.Caption>
+                        <h3>{experience.name}</h3>
+                        <p>{experience.descriptionShort}</p>
+                    </Carousel.Caption>
+                </Link>
+            </Carousel.Item>
+        )
+    );
+}
 
 
 function renderPagination(props) {
