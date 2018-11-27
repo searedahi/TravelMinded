@@ -37,7 +37,7 @@ function renderExperienceDetails(experienceDetails) {
                     </div>
                     <div>
                         <span className="experienceDetailsDurationLocation">{experienceDetails.durationFormatted}  {experienceDetails.location}</span>
-                    </div>                    
+                    </div>
                     <p className="experienceDetailsDescription">{experienceDetails.description}</p>
                     <p>{experienceDetails.nextAvailableDateFormatted}</p>
                 </Col>
@@ -65,8 +65,7 @@ function renderSpotlightCarousel(experienceDetails) {
                 </Carousel>
             </Col>
         </Row>
-        );
-
+    );
 }
 
 function renderExperienceImages(experienceDetails) {
@@ -109,13 +108,6 @@ function renderCompanyName(experienceDetails) {
     var company = experienceDetails.company;
 
     return (<span className="experienceDetailsCompany"> by {company.name}</span>);
-}
-
-function renderExperienceHtml(experienceDetails) {
-    return (
-        <div dangerouslySetInnerHTML={{ __html: experienceDetails.descriptionSafeHtml }}>
-        </div>
-    );
 }
 
 
