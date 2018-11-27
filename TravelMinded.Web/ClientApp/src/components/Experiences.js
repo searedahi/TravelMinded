@@ -33,9 +33,9 @@ function renderExperiencesTable(experiences) {
 
         <Row>
             {experiences.map(experience =>
-                <Col sm={12} md={6} lg={4} >
+                <Col sm={12} md={6} lg={4} className="fullWidthColumn">
                     <Carousel indicators={false} controls={false} wrap={true}>
-                        <Carousel.Item className="carouselItemWrapper" >
+                        <Carousel.Item className="experiencesItemWrapper" >
                             <Link to={`experience/${experience.id}`}>
                                 <img
                                     className="experiencesImg"

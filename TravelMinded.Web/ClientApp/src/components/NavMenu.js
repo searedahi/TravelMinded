@@ -33,7 +33,12 @@ export default props => (
             <NavItem>
                 <Glyphicon glyph='user' /> Profile
             </NavItem>
-        </LinkContainer>
+         </LinkContainer>
+         <LinkContainer to={'/fake'}>
+            <NavItem>
+                        <Glyphicon glyph='glyphicon glyphicon-cog' className="indicatorScreenSize"/> <span className="indicatorScreenSize">Admin</span>
+            </NavItem>
+         </LinkContainer>
       </Nav>
     </Navbar.Collapse>
   </Navbar>

@@ -29,37 +29,56 @@ class ExperienceDetails extends Component {
 function renderExperienceDetails(experienceDetails) {
     return (
         <div>
+            {renderSpotlightCarousel(experienceDetails)}
             <Row>
-                <Col sm={12} lg={12}>
-                    <Carousel indicators={false} controls={false} wrap={true}>
-                        <Carousel.Item className="carouselItemWrapper" >
-                            <img
-                                className="experiencesImg"
-                                alt="A generic snapshot of the experience."
-                                src={experienceDetails.imageCdnUrl === '' ? 'https://localhost:44307/images/island(35).jpg' : experienceDetails.imageCdnUrl} />
-                        </Carousel.Item>
-                        {renderExperienceImages(experienceDetails)}
-                    </Carousel>
-                </Col>
-            </Row>
-            <Row>
-                <Col sm={12} md={6} lg={6} >
-                    <h3>{experienceDetails.name}</h3>
+                <Col sm={12} md={8} lg={8} >
+                    <div className="experienceDetailsSingleLine">
+                        <span className="experienceDetailsName">{experienceDetails.name}</span>{renderCompanyName(experienceDetails)}
+                    </div>
+                    <div>
+                        <span className="experienceDetailsDurationLocation">{experienceDetails.durationFormatted}  {experienceDetails.location}</span>
+                    </div>                    
+                    <p className="experienceDetailsDescription">{experienceDetails.description}</p>
                     <p>{experienceDetails.nextAvailableDateFormatted}</p>
-                    <p>{experienceDetails.description}</p>
                 </Col>
             </Row>
         </div>
     );
 }
 
+
+function renderSpotlightCarousel(experienceDetails) {
+    return (
+        <Row className="experienceDetailImagesRow">
+            <Col sm={12} md={12} lg={12} className="experienceDetailImagesCol">
+                <Carousel indicators={false} controls={false} wrap={true} interval={7500}>
+                    <Carousel.Item className="carouselItemWrapper" >
+                        <img
+                            className="experienceDetailsImg"
+                            alt="A generic snapshot of the experience."
+                            src={experienceDetails.imageCdnUrl === '' ? 'https://localhost:44307/images/island(35).jpg' : experienceDetails.imageCdnUrl} />
+                        <div className="experienceDetailsSpotlight" >
+                            <h2>{experienceDetails.name}</h2>
+                        </div>
+                    </Carousel.Item>
+                    {renderExperienceImages(experienceDetails)}
+                </Carousel>
+            </Col>
+        </Row>
+        );
+
+}
+
 function renderExperienceImages(experienceDetails) {
 
     if (experienceDetails.images === undefined) {
         return (
-            <img
-                alt="A generic snapshot of the experience."
-                src="https://cdn.cnn.com/cnnnext/dam/assets/151030143154-burt-reynolds-smokey-and-the-bandit-full-169.jpg" />
+            <Carousel.Item className="carouselItemWrapper">
+                <img
+                    className="experienceDetailsImg"
+                    alt="A generic snapshot of the experience."
+                    src="https://cdn.cnn.com/cnnnext/dam/assets/151030143154-burt-reynolds-smokey-and-the-bandit-full-169.jpg" />
+            </Carousel.Item>
         );
     }
 
@@ -67,13 +86,29 @@ function renderExperienceImages(experienceDetails) {
 
     return (
         imgList.map(image =>
-            <Carousel.Item>
+            <Carousel.Item className="carouselItemWrapper">
+
                 <img
+                    className="experienceDetailsImg"
                     alt="A generic snapshot of the experience."
                     src={image.imageCdnUrl === '' ? 'https://cdn.cnn.com/cnnnext/dam/assets/151030143154-burt-reynolds-smokey-and-the-bandit-full-169.jpg' : image.imageCdnUrl} />
+                <div className="experienceDetailsSpotlight" >
+                    <h2>{experienceDetails.name}</h2>
+                </div>
             </Carousel.Item>
         )
     );
+}
+
+function renderCompanyName(experienceDetails) {
+
+    if (experienceDetails.company === undefined) {
+        return (<span className="experienceDetailsCompany">by Geeky Tours</span>);
+    }
+
+    var company = experienceDetails.company;
+
+    return (<span className="experienceDetailsCompany"> by {company.name}</span>);
 }
 
 function renderExperienceHtml(experienceDetails) {

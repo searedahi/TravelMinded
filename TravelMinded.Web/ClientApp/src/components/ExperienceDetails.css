@@ -1,18 +1,90 @@
-﻿.experiencesImg {
-    max-height: 300px;
+﻿.carouselItemWrapper {
+    max-height: 500px;
+}
+
+.experienceDetailsImg {
+    height: inherit;
+    width: 100%;
     overflow: hidden;
 }
 
-.carouselItemWrapper {
-    background-size: cover;
-    background-repeat: no-repeat;
-    max-height: 300px;
-    padding: 0;
-    margin: 0;
-    overflow:hidden;
+.experienceDetailImagesRow {
+    background-color: azure;
 }
 
-.carouselItemWrapper img{
-    height:100%;
-    width:100%;
+.experienceDetailImagesCol {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.experienceDetailsSpotlight {
+    background-color: rgba(0, 102, 102, .4);
+    color: white;
+    margin: auto;
+    padding: 1em 4em 1em 4em;
+    position: fixed;
+    top: 1em;
+    left: 40%;
+}
+
+
+.experienceDetailsCompany {
+    font-size: 1.25em;
+    font-weight: 400;
+}
+
+.experienceDetailsName {
+    font-size: 2.5em;
+    font-weight: 600;
+    font-family: inherit;
+    color: rgba(0, 102, 102, .9);
+}
+
+.experienceDetailsSingleLine {
+    display: inline-block;
+    margin: 2em 1em 1em 1em;
+}
+
+.experienceDetailsDurationLocation {
+    font-size: 1.25em;
+    color: rgb(47,79,79);
+    margin: 0em 0em 1em 1em;
+    padding: 0em;
+}
+
+.experienceDetailsDescription {
+    margin-top:1.25em;
+}
+
+
+
+
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+    .experienceDetailsImg {
+        height: inherit;
+        width: 100%;
+        overflow: visible;
+    }
+}
+
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+    .experienceDetailImagesRow {
+        height: 20%;
+    }
+
+    .experienceDetailsSpotlight {
+        left: 30%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    /* On small screens*/
+
+    .experienceDetailsSpotlight {
+        left: 5%;
+    }
 }
