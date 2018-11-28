@@ -56,10 +56,11 @@
     margin-top:1.25em;
 }
 
-
-
-
-
+.experienceDetailsCalendarSection {
+    background-color:blueviolet;
+    height: 200px;
+    width:auto;
+}
 /* Large Devices, Wide Screens */
 @media only screen and (min-width : 1200px) {
     .experienceDetailsImg {
