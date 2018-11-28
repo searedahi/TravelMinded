@@ -6,6 +6,7 @@ import { Col, Row, Button, Carousel } from 'react-bootstrap';
 import './ExperienceDetails.css';
 import NumericInput from 'react-numeric-input';
 import Calendar from 'react-calendar';
+import NumberFormat from 'react-number-format';
 
 class ExperienceDetails extends Component {
 
@@ -50,7 +51,9 @@ function renderExperienceInfoAndAvail(experienceDetails) {
             </Col>
             <Col sm={12} md={4} lg={4}>
                 <h4>Discouinted rate</h4>
-                <h2>{experienceDetails.currentAdultPrice}</h2>
+                <h2>
+                    <NumberFormat value={experienceDetails.currentAdultPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} />
+                    </h2>
                 <p>Check Availability:</p>
                 <NumericInput
                     id="headcount"
