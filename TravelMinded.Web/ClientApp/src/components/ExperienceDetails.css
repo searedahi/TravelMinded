@@ -70,7 +70,9 @@
     }
 }
 
-
+.experienceIsAvailable {
+    background-color:green;
+}
 /* Medium Devices, Desktops */
 @media only screen and (max-width : 992px) {
     .experienceDetailImagesRow {

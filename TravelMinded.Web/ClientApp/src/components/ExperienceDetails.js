@@ -10,6 +10,8 @@ import NumberFormat from 'react-number-format';
 
 class ExperienceDetails extends Component {
 
+
+
     componentWillMount() {
         // This method runs when the component is first added to the page
         const experienceId = parseInt(this.props.match.params.id, 10) || 0;
@@ -21,13 +23,16 @@ class ExperienceDetails extends Component {
         return (
             <section>
                 {renderSpotlightCarousel(this.props.experienceDetails)}
-                {renderExperienceInfoAndAvail(this.props.experienceDetails)}    
+                {renderExperienceInfoAndAvail(this.props.experienceDetails)}
             </section>
         );
     }
 }
 
-
+const activeDates = [
+    new Date(2018, 12, 3),
+    new Date(2018, 12, 4)
+];
 
 function renderExperienceInfoAndAvail(experienceDetails) {
 
@@ -53,7 +58,7 @@ function renderExperienceInfoAndAvail(experienceDetails) {
                 <h4>Discouinted rate</h4>
                 <h2>
                     <NumberFormat value={experienceDetails.currentAdultPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} />
-                    </h2>
+                </h2>
                 <p>Check Availability:</p>
                 <NumericInput
                     id="headcount"
@@ -66,6 +71,7 @@ function renderExperienceInfoAndAvail(experienceDetails) {
                     <Calendar
                         onChange={onExperienceDateChange}
                         value={todaysDate}
+                        tileDisabled={tileDisabled}
                     />
                 </section>
             </Col>
@@ -82,8 +88,36 @@ function onExperienceDateChange(dateSelected, event) {
     console.log('Date Selected: ' + dateSelected);
 }
 
+function isExperienceAvailableToday(date, view) {
 
 
+    const hasAvail = activeDates.some(activeDate => {
+        date.getFullYear() === activeDate.getFullYear() &&
+            date.getMonth() === activeDate.getMonth() &&
+            date.getDate() === activeDate.getDate();
+    });
+
+    return hasAvail;
+}
+
+function tileDisabled(date, view) {
+    return activeDates.some(activeDate => {
+        date.getFullYear() === activeDate.getFullYear() &&
+            date.getMonth() === activeDate.getMonth() &&
+            date.getDate() === activeDate.getDate();
+    });
+}
+
+function getTileClassName(date, view) {
+
+    var hasAvail = activeDates.some(activeDate => {
+        date.getFullYear() === activeDate.getFullYear() &&
+            date.getMonth() === activeDate.getMonth() &&
+            date.getDate() === activeDate.getDate();
+    });
+
+    return hasAvail ? 'experienceIsAvailable' : '';
+}
 
 
 function renderSpotlightCarousel(experienceDetails) {
