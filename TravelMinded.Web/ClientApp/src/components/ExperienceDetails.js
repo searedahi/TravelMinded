@@ -30,8 +30,14 @@ class ExperienceDetails extends Component {
 }
 
 const activeDates = [
-    new Date(2018, 12, 3),
-    new Date(2018, 12, 4)
+    new Date(2018, 10, 24),
+    new Date(2018, 10, 25),
+    new Date(2018, 10, 26),
+    new Date(2018, 10, 27),
+    new Date(2018, 10, 28),
+    new Date(2018, 11, 5),
+    new Date(2018, 11, 3),
+    new Date(2018, 11, 4)
 ];
 
 function renderExperienceInfoAndAvail(experienceDetails) {
@@ -71,7 +77,7 @@ function renderExperienceInfoAndAvail(experienceDetails) {
                     <Calendar
                         onChange={onExperienceDateChange}
                         value={todaysDate}
-                        tileDisabled={tileDisabled}
+                        tileClassName={getTileClassName}
                     />
                 </section>
             </Col>
@@ -88,35 +94,46 @@ function onExperienceDateChange(dateSelected, event) {
     console.log('Date Selected: ' + dateSelected);
 }
 
-function isExperienceAvailableToday(date, view) {
+function doDatesMatch(dateArg, dateComp) {
 
+    var y1 = dateArg.date.getFullYear();
+    var y2 = dateComp.getFullYear();
+    var yearsMatch = y1 === y2;
 
-    const hasAvail = activeDates.some(activeDate => {
-        date.getFullYear() === activeDate.getFullYear() &&
-            date.getMonth() === activeDate.getMonth() &&
-            date.getDate() === activeDate.getDate();
-    });
+    var m1 = dateArg.date.getMonth();
+    var m2 = dateComp.getMonth();
+    var monthsMatch = m1 === m2;
 
-    return hasAvail;
+    var d1 = dateArg.date.getDate();
+    var d2 = dateComp.getDate();
+    var datesMatch = d1 === d2;
+
+    var isMatch = yearsMatch
+        && monthsMatch
+        && datesMatch;
+
+    return isMatch;
 }
 
-function tileDisabled(date, view) {
+
+function tileDisabled(dateArg, view) {
     return activeDates.some(activeDate => {
-        date.getFullYear() === activeDate.getFullYear() &&
-            date.getMonth() === activeDate.getMonth() &&
-            date.getDate() === activeDate.getDate();
+        return doDatesMatch(dateArg, activeDate);
     });
 }
 
-function getTileClassName(date, view) {
+function getTileClassName(dateArg, view) {
 
-    var hasAvail = activeDates.some(activeDate => {
-        date.getFullYear() === activeDate.getFullYear() &&
-            date.getMonth() === activeDate.getMonth() &&
-            date.getDate() === activeDate.getDate();
-    });
 
-    return hasAvail ? 'experienceIsAvailable' : '';
+
+    if (
+        activeDates.some(activeDate => {
+            return doDatesMatch(dateArg, activeDate);
+        })
+    ) {
+        return 'experienceIsAvailable';
+    }
+
 }
 
 
