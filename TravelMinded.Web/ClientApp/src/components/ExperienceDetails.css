@@ -71,7 +71,7 @@
 }
 
 .experienceIsAvailable {
-    background-color:green !important;
+    background-color:rgb(0, 255, 33, 0.7) !important;
 }
 .experienceIsRed {
     background-color: red !important;

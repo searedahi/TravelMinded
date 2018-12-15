@@ -20,6 +20,8 @@ class ExperienceDetails extends Component {
     }
 
     render() {
+
+
         return (
             <section>
                 {renderSpotlightCarousel(this.props.experienceDetails)}
@@ -80,6 +82,8 @@ function renderExperienceInfoAndAvail(experienceDetails) {
                         tileClassName={getTileClassName}
                     />
                 </section>
+
+
             </Col>
         </Row>
     );
@@ -123,9 +127,6 @@ function tileDisabled(dateArg, view) {
 }
 
 function getTileClassName(dateArg, view) {
-
-
-
     if (
         activeDates.some(activeDate => {
             return doDatesMatch(dateArg, activeDate);
@@ -133,7 +134,6 @@ function getTileClassName(dateArg, view) {
     ) {
         return 'experienceIsAvailable';
     }
-
 }
 
 
@@ -198,6 +198,37 @@ function renderCompanyName(experienceDetails) {
     var company = experienceDetails.company;
 
     return (<span className="experienceDetailsCompany"> by {company.name}</span>);
+}
+
+function renderTravelMindedTips(experienceDetails) {
+
+    if (experienceDetails.images === undefined) {
+        return (
+            <Carousel.Item className="carouselItemWrapper">
+                <img
+                    className="experienceDetailsImg"
+                    alt="A generic snapshot of the experience."
+                    src="https://cdn.cnn.com/cnnnext/dam/assets/151030143154-burt-reynolds-smokey-and-the-bandit-full-169.jpg" />
+            </Carousel.Item>
+        );
+    }
+
+    var imgList = experienceDetails.images;
+
+    return (
+        imgList.map(image =>
+            <Carousel.Item className="carouselItemWrapper">
+
+                <img
+                    className="experienceDetailsImg"
+                    alt="A generic snapshot of the experience."
+                    src={image.imageCdnUrl === '' ? 'https://cdn.cnn.com/cnnnext/dam/assets/151030143154-burt-reynolds-smokey-and-the-bandit-full-169.jpg' : image.imageCdnUrl} />
+                <div className="experienceDetailsSpotlight" >
+                    <h2>{experienceDetails.name}</h2>
+                </div>
+            </Carousel.Item>
+        )
+    );
 }
 
 
