@@ -20,6 +20,8 @@ class ExperienceDetails extends Component {
     }
 
     render() {
+
+
         return (
             <section>
                 {renderSpotlightCarousel(this.props.experienceDetails)}
@@ -30,10 +32,21 @@ class ExperienceDetails extends Component {
 }
 
 const activeDates = [
+<<<<<<< HEAD
     new Date(2018, 11, 26),
     new Date(2018, 11, 27),
     new Date(2019, 0, 4),
     new Date(2019, 0, 3)
+=======
+    new Date(2018, 10, 24),
+    new Date(2018, 10, 25),
+    new Date(2018, 10, 26),
+    new Date(2018, 10, 27),
+    new Date(2018, 10, 28),
+    new Date(2018, 11, 5),
+    new Date(2018, 11, 3),
+    new Date(2018, 11, 4)
+>>>>>>> 120115f46a9527e2a0081bc7d6b9e1c1218a435f
 ];
 
 function renderExperienceInfoAndAvail(experienceDetails) {
@@ -80,10 +93,15 @@ function renderExperienceInfoAndAvail(experienceDetails) {
                     <Calendar
                         onChange={onExperienceDateChange}
                         value={todaysDate}
+<<<<<<< HEAD
                         tileDisabled={tileDisabled}
+=======
+>>>>>>> 120115f46a9527e2a0081bc7d6b9e1c1218a435f
                         tileClassName={getTileClassName}
                     />
                 </section>
+
+
             </Col>
         </Row>
     );
@@ -98,24 +116,59 @@ function onExperienceDateChange(dateSelected, event) {
     console.log('Date Selected: ' + dateSelected);
 }
 
-function isExperienceAvailableToday(date, view) {
+function doDatesMatch(dateArg, dateComp) {
 
+<<<<<<< HEAD
     var hasAvail = availableDates.some(activeDate => {
         return date.date.getFullYear() === activeDate.getFullYear() &&
             date.date.getMonth() === activeDate.getMonth() &&
             date.date.getDate() === activeDate.getDate();
     });
+=======
+    var y1 = dateArg.date.getFullYear();
+    var y2 = dateComp.getFullYear();
+    var yearsMatch = y1 === y2;
 
-    return hasAvail;
-}
+    var m1 = dateArg.date.getMonth();
+    var m2 = dateComp.getMonth();
+    var monthsMatch = m1 === m2;
+>>>>>>> 120115f46a9527e2a0081bc7d6b9e1c1218a435f
 
+    var d1 = dateArg.date.getDate();
+    var d2 = dateComp.getDate();
+    var datesMatch = d1 === d2;
+
+<<<<<<< HEAD
 function tileDisabled(date, view) {
     return !isExperienceAvailableToday(date);
+=======
+    var isMatch = yearsMatch
+        && monthsMatch
+        && datesMatch;
+
+    return isMatch;
+>>>>>>> 120115f46a9527e2a0081bc7d6b9e1c1218a435f
 }
 
-function getTileClassName(date, view) {
 
+<<<<<<< HEAD
     return isExperienceAvailableToday(date) ? 'experienceIsAvailable' : '';
+=======
+function tileDisabled(dateArg, view) {
+    return activeDates.some(activeDate => {
+        return doDatesMatch(dateArg, activeDate);
+    });
+}
+
+function getTileClassName(dateArg, view) {
+    if (
+        activeDates.some(activeDate => {
+            return doDatesMatch(dateArg, activeDate);
+        })
+    ) {
+        return 'experienceIsAvailable';
+    }
+>>>>>>> 120115f46a9527e2a0081bc7d6b9e1c1218a435f
 }
 
 
@@ -180,6 +233,37 @@ function renderCompanyName(experienceDetails) {
     var company = experienceDetails.company;
 
     return (<span className="experienceDetailsCompany"> by {company.name}</span>);
+}
+
+function renderTravelMindedTips(experienceDetails) {
+
+    if (experienceDetails.images === undefined) {
+        return (
+            <Carousel.Item className="carouselItemWrapper">
+                <img
+                    className="experienceDetailsImg"
+                    alt="A generic snapshot of the experience."
+                    src="https://cdn.cnn.com/cnnnext/dam/assets/151030143154-burt-reynolds-smokey-and-the-bandit-full-169.jpg" />
+            </Carousel.Item>
+        );
+    }
+
+    var imgList = experienceDetails.images;
+
+    return (
+        imgList.map(image =>
+            <Carousel.Item className="carouselItemWrapper">
+
+                <img
+                    className="experienceDetailsImg"
+                    alt="A generic snapshot of the experience."
+                    src={image.imageCdnUrl === '' ? 'https://cdn.cnn.com/cnnnext/dam/assets/151030143154-burt-reynolds-smokey-and-the-bandit-full-169.jpg' : image.imageCdnUrl} />
+                <div className="experienceDetailsSpotlight" >
+                    <h2>{experienceDetails.name}</h2>
+                </div>
+            </Carousel.Item>
+        )
+    );
 }
 
 
