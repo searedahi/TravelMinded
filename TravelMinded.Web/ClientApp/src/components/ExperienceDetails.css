@@ -71,7 +71,7 @@
 }
 
 .experienceIsAvailable {
-    background-color:green;
+    background-color: rgb(108, 242, 16) !important;
 }
 /* Medium Devices, Desktops */
 @media only screen and (max-width : 992px) {

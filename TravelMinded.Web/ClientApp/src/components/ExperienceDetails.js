@@ -30,8 +30,10 @@ class ExperienceDetails extends Component {
 }
 
 const activeDates = [
-    new Date(2018, 12, 3),
-    new Date(2018, 12, 4)
+    new Date(2018, 11, 26),
+    new Date(2018, 11, 27),
+    new Date(2019, 0, 4),
+    new Date(2019, 0, 3)
 ];
 
 function renderExperienceInfoAndAvail(experienceDetails) {
@@ -42,6 +44,13 @@ function renderExperienceInfoAndAvail(experienceDetails) {
         var serverDate = new Date(experienceDetails.nextAvailableDate);
         todaysDate = serverDate;
     }
+
+    var availableDates = [];
+    if (experienceDetails !== undefined && experienceDetails.availabilities !== undefined) {
+        experienceDetails.availabilities.map(ava => availableDates.push(new Date(Date.parse(ava.startAt))));
+    }
+       
+    var strtest = "";
     return (
         <Row>
             <Col sm={12} md={8} lg={8}>
@@ -72,6 +81,7 @@ function renderExperienceInfoAndAvail(experienceDetails) {
                         onChange={onExperienceDateChange}
                         value={todaysDate}
                         tileDisabled={tileDisabled}
+                        tileClassName={getTileClassName}
                     />
                 </section>
             </Col>
@@ -90,33 +100,22 @@ function onExperienceDateChange(dateSelected, event) {
 
 function isExperienceAvailableToday(date, view) {
 
-
-    const hasAvail = activeDates.some(activeDate => {
-        date.getFullYear() === activeDate.getFullYear() &&
-            date.getMonth() === activeDate.getMonth() &&
-            date.getDate() === activeDate.getDate();
+    var hasAvail = availableDates.some(activeDate => {
+        return date.date.getFullYear() === activeDate.getFullYear() &&
+            date.date.getMonth() === activeDate.getMonth() &&
+            date.date.getDate() === activeDate.getDate();
     });
 
     return hasAvail;
 }
 
 function tileDisabled(date, view) {
-    return activeDates.some(activeDate => {
-        date.getFullYear() === activeDate.getFullYear() &&
-            date.getMonth() === activeDate.getMonth() &&
-            date.getDate() === activeDate.getDate();
-    });
+    return !isExperienceAvailableToday(date);
 }
 
 function getTileClassName(date, view) {
 
-    var hasAvail = activeDates.some(activeDate => {
-        date.getFullYear() === activeDate.getFullYear() &&
-            date.getMonth() === activeDate.getMonth() &&
-            date.getDate() === activeDate.getDate();
-    });
-
-    return hasAvail ? 'experienceIsAvailable' : '';
+    return isExperienceAvailableToday(date) ? 'experienceIsAvailable' : '';
 }
 
 
