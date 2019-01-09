@@ -71,15 +71,12 @@
 }
 
 .experienceIsAvailable {
-<<<<<<< HEAD
-    background-color: rgb(108, 242, 16) !important;
-=======
     background-color:rgb(0, 255, 33, 0.7) !important;
 }
 .experienceIsRed {
     background-color: red !important;
->>>>>>> 120115f46a9527e2a0081bc7d6b9e1c1218a435f
 }
+
 /* Medium Devices, Desktops */
 @media only screen and (max-width : 992px) {
     .experienceDetailImagesRow {

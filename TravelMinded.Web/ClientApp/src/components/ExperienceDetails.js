@@ -20,24 +20,17 @@ class ExperienceDetails extends Component {
     }
 
     render() {
-
-
         return (
             <section>
                 {renderSpotlightCarousel(this.props.experienceDetails)}
                 {renderExperienceInfoAndAvail(this.props.experienceDetails)}
+                {renderTravelMindedTips(this.props.experienceDetails)}
             </section>
         );
     }
 }
 
 const activeDates = [
-<<<<<<< HEAD
-    new Date(2018, 11, 26),
-    new Date(2018, 11, 27),
-    new Date(2019, 0, 4),
-    new Date(2019, 0, 3)
-=======
     new Date(2018, 10, 24),
     new Date(2018, 10, 25),
     new Date(2018, 10, 26),
@@ -46,7 +39,6 @@ const activeDates = [
     new Date(2018, 11, 5),
     new Date(2018, 11, 3),
     new Date(2018, 11, 4)
->>>>>>> 120115f46a9527e2a0081bc7d6b9e1c1218a435f
 ];
 
 function renderExperienceInfoAndAvail(experienceDetails) {
@@ -62,8 +54,8 @@ function renderExperienceInfoAndAvail(experienceDetails) {
     if (experienceDetails !== undefined && experienceDetails.availabilities !== undefined) {
         experienceDetails.availabilities.map(ava => availableDates.push(new Date(Date.parse(ava.startAt))));
     }
-       
-    var strtest = "";
+
+
     return (
         <Row>
             <Col sm={12} md={8} lg={8}>
@@ -93,15 +85,10 @@ function renderExperienceInfoAndAvail(experienceDetails) {
                     <Calendar
                         onChange={onExperienceDateChange}
                         value={todaysDate}
-<<<<<<< HEAD
                         tileDisabled={tileDisabled}
-=======
->>>>>>> 120115f46a9527e2a0081bc7d6b9e1c1218a435f
                         tileClassName={getTileClassName}
                     />
                 </section>
-
-
             </Col>
         </Row>
     );
@@ -117,48 +104,22 @@ function onExperienceDateChange(dateSelected, event) {
 }
 
 function doDatesMatch(dateArg, dateComp) {
-
-<<<<<<< HEAD
-    var hasAvail = availableDates.some(activeDate => {
-        return date.date.getFullYear() === activeDate.getFullYear() &&
-            date.date.getMonth() === activeDate.getMonth() &&
-            date.date.getDate() === activeDate.getDate();
-    });
-=======
-    var y1 = dateArg.date.getFullYear();
-    var y2 = dateComp.getFullYear();
-    var yearsMatch = y1 === y2;
-
-    var m1 = dateArg.date.getMonth();
-    var m2 = dateComp.getMonth();
-    var monthsMatch = m1 === m2;
->>>>>>> 120115f46a9527e2a0081bc7d6b9e1c1218a435f
-
-    var d1 = dateArg.date.getDate();
-    var d2 = dateComp.getDate();
-    var datesMatch = d1 === d2;
-
-<<<<<<< HEAD
-function tileDisabled(date, view) {
-    return !isExperienceAvailableToday(date);
-=======
-    var isMatch = yearsMatch
-        && monthsMatch
-        && datesMatch;
-
-    return isMatch;
->>>>>>> 120115f46a9527e2a0081bc7d6b9e1c1218a435f
+    return dateArg.date.getFullYear() === dateComp.getFullYear() &&
+        dateArg.date.getMonth() === dateComp.getMonth() &&
+        dateArg.date.getDate() === dateComp.getDate();
 }
 
-
-<<<<<<< HEAD
-    return isExperienceAvailableToday(date) ? 'experienceIsAvailable' : '';
-=======
 function tileDisabled(dateArg, view) {
-    return activeDates.some(activeDate => {
-        return doDatesMatch(dateArg, activeDate);
-    });
+    if (
+        activeDates.some(activeDate => {
+            return doDatesMatch(dateArg, activeDate);
+        })
+    ) {
+        return false;
+    }
+
 }
+
 
 function getTileClassName(dateArg, view) {
     if (
@@ -168,7 +129,6 @@ function getTileClassName(dateArg, view) {
     ) {
         return 'experienceIsAvailable';
     }
->>>>>>> 120115f46a9527e2a0081bc7d6b9e1c1218a435f
 }
 
 
@@ -237,32 +197,20 @@ function renderCompanyName(experienceDetails) {
 
 function renderTravelMindedTips(experienceDetails) {
 
-    if (experienceDetails.images === undefined) {
+    if (experienceDetails.proTips === undefined) {
         return (
-            <Carousel.Item className="carouselItemWrapper">
-                <img
-                    className="experienceDetailsImg"
-                    alt="A generic snapshot of the experience."
-                    src="https://cdn.cnn.com/cnnnext/dam/assets/151030143154-burt-reynolds-smokey-and-the-bandit-full-169.jpg" />
-            </Carousel.Item>
+            <p>No pro tips</p>
         );
     }
 
-    var imgList = experienceDetails.images;
+    var proTips = experienceDetails.proTips;
 
     return (
-        imgList.map(image =>
-            <Carousel.Item className="carouselItemWrapper">
-
-                <img
-                    className="experienceDetailsImg"
-                    alt="A generic snapshot of the experience."
-                    src={image.imageCdnUrl === '' ? 'https://cdn.cnn.com/cnnnext/dam/assets/151030143154-burt-reynolds-smokey-and-the-bandit-full-169.jpg' : image.imageCdnUrl} />
-                <div className="experienceDetailsSpotlight" >
-                    <h2>{experienceDetails.name}</h2>
-                </div>
-            </Carousel.Item>
-        )
+        <Row>
+            proTips.map(pTip =>
+            <p>pTip</p>
+            )
+        </Row>
     );
 }
 
