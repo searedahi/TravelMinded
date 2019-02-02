@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { experienceDetailsActionCreators } from '../store/ExperienceDetails';
-import { Col, Row, Button, Carousel } from 'react-bootstrap';
+import { Col, Row, Carousel } from 'react-bootstrap';
 import './ExperienceDetails.css';
 import NumericInput from 'react-numeric-input';
 import Calendar from 'react-calendar';
 import NumberFormat from 'react-number-format';
 
 class ExperienceDetails extends Component {
-
-
 
     componentWillMount() {
         // This method runs when the component is first added to the page
@@ -31,18 +29,21 @@ class ExperienceDetails extends Component {
 }
 
 const activeDates = [
-    new Date(2018, 10, 24),
-    new Date(2018, 10, 25),
-    new Date(2018, 10, 26),
-    new Date(2018, 10, 27),
-    new Date(2018, 10, 28),
-    new Date(2018, 11, 5),
-    new Date(2018, 11, 3),
-    new Date(2018, 11, 4)
+    new Date(2019, 1, 24),
+    new Date(2019, 1, 25),
+    new Date(2019, 1, 26),
+    new Date(2019, 1, 27),
+    new Date(2019, 1, 28),
+    new Date(2019, 2, 5),
+    new Date(2019, 2, 3),
+    new Date(2019, 2, 4)
 ];
 
-function renderExperienceInfoAndAvail(experienceDetails) {
 
+
+
+
+function renderExperienceInfoAndAvail(experienceDetails) {
 
     var todaysDate = new Date(2019, 0, 1);
     if (experienceDetails.nextAvailableDate !== undefined) {
@@ -83,10 +84,10 @@ function renderExperienceInfoAndAvail(experienceDetails) {
                 />
                 <section id="experienceDetailsCalendarSection">
                     <Calendar
+                        tileClassName={tileClassName}
                         onChange={onExperienceDateChange}
                         value={todaysDate}
                         tileDisabled={tileDisabled}
-                        tileClassName={getTileClassName}
                     />
                 </section>
             </Col>
@@ -94,10 +95,19 @@ function renderExperienceInfoAndAvail(experienceDetails) {
     );
 }
 
+
+function tileClassName({ date }) {
+    console.log('ClassOn: ' + date);
+    return 'experienceIsRed !important';
+}
+
+function tileDisabled(dateArg) {
+    return checkActiveDates(dateArg);
+}
+
 function onHeadcountChange(value, event) {
     console.log('Headcount Changed: ' + value);
 }
-
 
 function onExperienceDateChange(dateSelected, event) {
     console.log('Date Selected: ' + dateSelected);
@@ -109,27 +119,21 @@ function doDatesMatch(dateArg, dateComp) {
         dateArg.date.getDate() === dateComp.getDate();
 }
 
-function tileDisabled(dateArg, view) {
-    if (
-        activeDates.some(activeDate => {
-            return doDatesMatch(dateArg, activeDate);
-        })
-    ) {
-        return false;
+function checkActiveDates(dateArg) {
+    let doMatch = activeDates.some(activeDate => {
+        return doDatesMatch(dateArg, activeDate);
+    });
+
+    if (doMatch) {
+        console.log('Matched: ' + dateArg.date);
     }
 
+    return doMatch;
 }
 
 
-function getTileClassName(dateArg, view) {
-    if (
-        activeDates.some(activeDate => {
-            return doDatesMatch(dateArg, activeDate);
-        })
-    ) {
-        return 'experienceIsAvailable';
-    }
-}
+
+
 
 
 function renderSpotlightCarousel(experienceDetails) {
@@ -204,12 +208,12 @@ function renderTravelMindedTips(experienceDetails) {
     }
 
     var proTips = experienceDetails.proTips;
-
     return (
         <Row>
-            proTips.map(pTip =>
-            <p>pTip</p>
-            )
+            <Col>
+                {proTips.map(pTip =>
+                    <p>{pTip.description}</p>)}
+            </Col>    
         </Row>
     );
 }

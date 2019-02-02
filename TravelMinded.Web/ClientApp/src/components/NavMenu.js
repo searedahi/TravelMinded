@@ -8,7 +8,9 @@ export default props => (
   <Navbar inverse fixedTop fluid collapseOnSelect>
     <Navbar.Header>
       <Navbar.Brand>
-                <Link to={'/'}><img src="/logos/travel_minded_white.png" className="navbarImg"/>   </Link>
+                <Link to={'/'}>
+                    <img src="/logos/travel_minded_white.png" className="navbarImg" alt="Travel Minded logo" />
+                </Link>
       </Navbar.Brand>
       <Navbar.Toggle />
     </Navbar.Header>

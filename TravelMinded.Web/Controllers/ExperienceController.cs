@@ -9,7 +9,7 @@ namespace TravelMinded.Web.Controllers
     [ApiController]
     public class ExperienceController : ControllerBase
     {
-        private TravelMindedService travelMindedService;
+        private TravelMindedRepository travelMindedService;
         
         public ExperienceController() {
             travelMindedService = TravelMindedServiceFactory.CreateTravelMindedService();

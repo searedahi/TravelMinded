@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { actionCreators } from '../store/Experiences';
 import './Experiences.css';
-import { Col, Grid, Row, Button, Carousel } from 'react-bootstrap';
+import { Col, Row, Carousel } from 'react-bootstrap';
 
 
 class Experiences extends Component {
@@ -77,15 +77,4 @@ function renderImages(experience) {
     );
 }
 
-
-function renderPagination(props) {
-    const prevStartDateIndex = (props.startDateIndex || 0) - 5;
-    const nextStartDateIndex = (props.startDateIndex || 0) + 5;
-
-    return <p className='clearfix text-center'>
-        <Link className='btn btn-default pull-left' to={`/experiences/${prevStartDateIndex}`}>Previous</Link>
-        <Link className='btn btn-default pull-right' to={`/experiences/${nextStartDateIndex}`}>Next</Link>
-        {props.isLoading ? <span>Loading...</span> : []}
-    </p>;
-}
 export default connect(state => state.experiences, dispatch => bindActionCreators(actionCreators, dispatch))(Experiences);
