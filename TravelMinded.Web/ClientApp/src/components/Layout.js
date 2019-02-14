@@ -1,16 +1,19 @@
-import React from 'react';
-import { Col, Container, Row } from 'reactstrap';
-import NavMenu from './NavMenu';
+import React, { Component } from 'react';
+import { Container } from 'reactstrap';
+import { NavMenu } from './NavMenu';
 
-export default props => (
-    <Container>
-        <Row>
-            <Col>
+
+export class Layout extends Component {
+    static displayName = Layout.name;
+
+    render() {
+        return (
+            <div>
                 <NavMenu />
-            </Col>
-            <Col sm={12} lg={12}>
-                {props.children}
-            </Col>
-        </Row>
-    </Container>
-);
+                <Container>
+                    {this.props.children}
+                </Container>
+            </div>
+        );
+    }
+}

@@ -1,46 +1,59 @@
-﻿import React from 'react';
+﻿import React, { Component } from 'react';
+import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { Nav, Navbar, NavItem, NavLink } from 'reactstrap';
 import './NavMenu.css';
 
-export default props => (
-  <Navbar inverse fixedTop fluid collapseOnSelect>
-    <Navbar.Header>
-      <Navbar.Brand>
-                <Link to={'/'}>
-                    <img src="/logos/travel_minded_white.png" className="navbarImg" alt="Travel Minded logo" />
-                </Link>
-      </Navbar.Brand>
-      <Navbar.Toggle />
-    </Navbar.Header>
-    <Navbar.Collapse>
-      <Nav>
-        <NavLink tag={Link} to={'/lodgings'}>
-          <NavItem>
-            <i className='fa faHome' /> Lodgings
-          </NavItem>
-        </NavLink>
-        <NavLink tag={Link} to={'/experiences'}>
-          <NavItem>
-             <i className='fa faCamera' /> Experiences
-          </NavItem>
-        </NavLink>
-        <NavLink tag={Link} to={'/cart'}>
-          <NavItem>
-             <i className='fa faHome' /> Cart
-          </NavItem>
-        </NavLink>
-        <NavLink tag={Link} to={'/profile'}>
-            <NavItem>
-              <i className='fa faUser' /> Profile
-            </NavItem>
-         </NavLink>
-         <NavLink tag={Link} to={'/fake'}>
-            <NavItem>
-              <i className='fa faHome'/> <span className="indicatorScreenSize">Admin</span>
-            </NavItem>
-         </NavLink>
-      </Nav>
-    </Navbar.Collapse>
-  </Navbar>
-);
+export class NavMenu extends Component {
+    static displayName = NavMenu.name;
+
+    constructor(props) {
+        super(props);
+
+        this.toggleNavbar = this.toggleNavbar.bind(this);
+        this.state = {
+            collapsed: true
+        };
+    }
+
+    toggleNavbar() {
+        this.setState({
+            collapsed: !this.state.collapsed
+        });
+    }
+
+    render() {
+        return (
+            <header>
+                <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
+                    <Container>
+                        <NavbarBrand tag={Link} to="/">
+                            <Link to={'/'}>
+                                <img src="/logos/travel_minded_white.png" className="navbarImg" alt="Travel Minded logo" />
+                            </Link>
+                        </NavbarBrand>
+                        <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
+                        <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
+                            <ul className="navbar-nav flex-grow">
+                                <NavItem>
+                                    <NavLink tag={Link} className="text-dark" to="/lodgings">Lodgings</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={Link} className="text-dark" to="/experiences">Experiences</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={Link} className="text-dark" to="/cart">Cart</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={Link} className="text-dark" to="/profile">Profile</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink tag={Link} className="text-dark" to="/admin"><span className="indicatorScreenSize">Admin</span></NavLink>
+                                </NavItem>
+                            </ul>
+                        </Collapse>
+                    </Container>
+                </Navbar>
+            </header>
+        );
+    }
+}
