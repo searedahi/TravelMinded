@@ -1,20 +1,18 @@
-﻿import React from 'react';
-import { Route } from 'react-router';
-import Layout from './components/Layout';
-import Home from './components/Home';
-import Counter from './components/Counter';
-import FetchData from './components/FetchData';
-import Experiences from './components/Experiences';
-import ExperienceDetails from './components/ExperienceDetails';
+﻿import React from 'react'
+import PropTypes from 'prop-types'
+import { ConnectedRouter } from 'connected-react-router'
+import routes from './routes'
 
-export default () => (
-    <Layout>
-        <Route exact path='/' component={Home} />
-        <Route path='/counter' component={Counter} />
-        <Route path='/fetchdata/:startDateIndex?' component={FetchData} />
-        <Route path='/experiences' component={Experiences} />
-        <Route path='/experience/:id' component={ExperienceDetails} />
-        <Route path='/experiencedetails/:id' component={ExperienceDetails} />
+const App = ({ history }) => {
+    return (
+        <ConnectedRouter history={history}>
+            {routes}
+        </ConnectedRouter>
+    )
+}
 
-    </Layout>
-);
+App.propTypes = {
+    history: PropTypes.object,
+}
+
+export default App

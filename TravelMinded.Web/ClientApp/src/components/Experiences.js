@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { actionCreators } from '../store/Experiences';
+import { actionCreators } from '../reducers/Experiences';
 import './Experiences.css';
-import { Col, Row, Carousel } from 'react-bootstrap';
+import { Col, Row, Carousel } from 'reactstrap';
 
 
 class Experiences extends Component {

@@ -57,10 +57,30 @@
 }
 
 .experienceDetailsCalendarSection {
-    background-color:blueviolet;
-    height: 200px;
+    display:flex;
+    align-items:center;
     width:auto;
+    margin-top:1em;
+    margin-left:auto;
 }
+
+    /*.experienceDetailsCalendarSection .react-calendar {
+        margin-left: auto;
+        margin-right: auto;
+    }*/
+
+
+.bookNowButton {
+    width:100%;
+}
+
+.customerTypesTable tr td {
+    padding: 0.25em;
+}
+
+
+
+
 /* Large Devices, Wide Screens */
 @media only screen and (min-width : 1200px) {
     .experienceDetailsImg {
@@ -75,6 +95,7 @@
 }
 .experienceIsRed {
     background-color: red !important;
+    color: chartreuse;
 }
 .experienceIsGreen {
     background-color: green !important;
@@ -99,4 +120,8 @@
     .experienceDetailsSpotlight {
         left: 5%;
     }
+}
+
+.headcountPicker {
+    width:150px;
 }

@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { experienceDetailsActionCreators } from '../store/ExperienceDetails';
-import { Col, Row, Carousel } from 'react-bootstrap';
+import { experienceDetailsActionCreators } from '../reducers/ExperienceDetails';
+import { Col, Row, Carousel, Button } from 'reactstrap';
 import './ExperienceDetails.css';
-import NumericInput from 'react-numeric-input';
-import Calendar from 'react-calendar';
-import NumberFormat from 'react-number-format';
+import CustomerTypeLineItem from './CustomerTypeLineItem';
 
 class ExperienceDetails extends Component {
 
@@ -28,6 +26,7 @@ class ExperienceDetails extends Component {
     }
 }
 
+
 const activeDates = [
     new Date(2019, 1, 24),
     new Date(2019, 1, 25),
@@ -40,77 +39,77 @@ const activeDates = [
 ];
 
 
-
-
-
 function renderExperienceInfoAndAvail(experienceDetails) {
 
-    var todaysDate = new Date(2019, 0, 1);
+    let todaysDate = new Date(2019, 0, 1);
     if (experienceDetails.nextAvailableDate !== undefined) {
         var serverDate = new Date(experienceDetails.nextAvailableDate);
         todaysDate = serverDate;
     }
 
-    var availableDates = [];
+    let availableDates = [];
     if (experienceDetails !== undefined && experienceDetails.availabilities !== undefined) {
         experienceDetails.availabilities.map(ava => availableDates.push(new Date(Date.parse(ava.startAt))));
     }
 
+    if (experienceDetails.customerPrototypes === undefined) {
+        return (<Row><Col>NO DATA</Col></Row>);
+    } else {
+        return (
+            <Row>
+                <Col sm={12} md={8} lg={8}>
+                    <div className="experienceDetailsSingleLine">
+                        <span className="experienceDetailsName">{experienceDetails.name}</span>{renderCompanyName(experienceDetails)}
+                    </div>
+                    <div>
+                        <span className="experienceDetailsDurationLocation">{experienceDetails.durationFormatted}  {experienceDetails.location}</span>
+                    </div>
+                    <p className="experienceDetailsDescription">{experienceDetails.description}</p>
+                    <p>{experienceDetails.nextAvailableDateFormatted}</p>
+                </Col>
+                <Col sm={12} md={4} lg={4}>
+                    {experienceDetails.customerPrototypes.map(cType =>
+                        <CustomerTypeLineItem customerType={cType} />
+                    )}
 
-    return (
-        <Row>
-            <Col sm={12} md={8} lg={8}>
-                <div className="experienceDetailsSingleLine">
-                    <span className="experienceDetailsName">{experienceDetails.name}</span>{renderCompanyName(experienceDetails)}
-                </div>
-                <div>
-                    <span className="experienceDetailsDurationLocation">{experienceDetails.durationFormatted}  {experienceDetails.location}</span>
-                </div>
-                <p className="experienceDetailsDescription">{experienceDetails.description}</p>
-                <p>{experienceDetails.nextAvailableDateFormatted}</p>
-            </Col>
-            <Col sm={12} md={4} lg={4}>
-                <h4>Discouinted rate</h4>
-                <h2>
-                    <NumberFormat value={experienceDetails.currentAdultPrice} displayType={'text'} thousandSeparator={true} prefix={'$'} decimalScale={2} />
-                </h2>
-                <p>Check Availability:</p>
-                <NumericInput
-                    id="headcount"
-                    className="form-control"
-                    min={1}
-                    max={10}
-                    onChange={onHeadcountChange}
-                />
-                <section id="experienceDetailsCalendarSection">
-                    <Calendar
-                        tileClassName={tileClassName}
-                        onChange={onExperienceDateChange}
-                        value={todaysDate}
-                        tileDisabled={tileDisabled}
-                    />
-                </section>
-            </Col>
-        </Row>
-    );
+                </Col>
+            </Row>
+        );
+    }
 }
 
+function tileClassName(date, view) {
+    console.log('experienceIsRed');
 
-function tileClassName({ date }) {
-    console.log('ClassOn: ' + date);
-    return 'experienceIsRed !important';
+    let classes = [];
+    classes.push('experienceIsRed');
+    return classes;
 }
+
 
 function tileDisabled(dateArg) {
     return checkActiveDates(dateArg);
 }
 
+function onExperienceDateChange(dateSelected, event) {
+    console.log('Date Selected: ' + dateSelected);
+}
+
+
 function onHeadcountChange(value, event) {
     console.log('Headcount Changed: ' + value);
 }
 
-function onExperienceDateChange(dateSelected, event) {
-    console.log('Date Selected: ' + dateSelected);
+
+
+
+
+
+function checkActiveDates(dateArg) {
+    let doMatch = activeDates.some(activeDate => {
+        return doDatesMatch(dateArg, activeDate);
+    });
+    return doMatch;
 }
 
 function doDatesMatch(dateArg, dateComp) {
@@ -118,20 +117,6 @@ function doDatesMatch(dateArg, dateComp) {
         dateArg.date.getMonth() === dateComp.getMonth() &&
         dateArg.date.getDate() === dateComp.getDate();
 }
-
-function checkActiveDates(dateArg) {
-    let doMatch = activeDates.some(activeDate => {
-        return doDatesMatch(dateArg, activeDate);
-    });
-
-    if (doMatch) {
-        console.log('Matched: ' + dateArg.date);
-    }
-
-    return doMatch;
-}
-
-
 
 
 
@@ -163,6 +148,7 @@ function renderExperienceImages(experienceDetails) {
         return (
             <Carousel.Item className="carouselItemWrapper">
                 <img
+                    key="123"
                     className="experienceDetailsImg"
                     alt="A generic snapshot of the experience."
                     src="https://cdn.cnn.com/cnnnext/dam/assets/151030143154-burt-reynolds-smokey-and-the-bandit-full-169.jpg" />
@@ -174,8 +160,7 @@ function renderExperienceImages(experienceDetails) {
 
     return (
         imgList.map(image =>
-            <Carousel.Item className="carouselItemWrapper">
-
+            <Carousel.Item className="carouselItemWrapper" key="{image.id}">
                 <img
                     className="experienceDetailsImg"
                     alt="A generic snapshot of the experience."
@@ -212,8 +197,8 @@ function renderTravelMindedTips(experienceDetails) {
         <Row>
             <Col>
                 {proTips.map(pTip =>
-                    <p>{pTip.description}</p>)}
-            </Col>    
+                    <p key={pTip.id}>{pTip.description}</p>)}
+            </Col>
         </Row>
     );
 }

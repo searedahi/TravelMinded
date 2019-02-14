@@ -1,7 +1,6 @@
 ﻿import React from 'react';
 import { Link } from 'react-router-dom';
-import { Glyphicon, Nav, Navbar, NavItem } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
+import { Nav, Navbar, NavItem, NavLink } from 'reactstrap';
 import './NavMenu.css';
 
 export default props => (
@@ -16,31 +15,31 @@ export default props => (
     </Navbar.Header>
     <Navbar.Collapse>
       <Nav>
-        <LinkContainer to={'/lodgings'}>
+        <NavLink tag={Link} to={'/lodgings'}>
           <NavItem>
-            <Glyphicon glyph='home' /> Lodgings
+            <i className='fa faHome' /> Lodgings
           </NavItem>
-        </LinkContainer>
-        <LinkContainer to={'/experiences'}>
+        </NavLink>
+        <NavLink tag={Link} to={'/experiences'}>
           <NavItem>
-           <Glyphicon glyph='camera' /> Experiences
+             <i className='fa faCamera' /> Experiences
           </NavItem>
-        </LinkContainer>
-        <LinkContainer to={'/cart'}>
+        </NavLink>
+        <NavLink tag={Link} to={'/cart'}>
+          <NavItem>
+             <i className='fa faHome' /> Cart
+          </NavItem>
+        </NavLink>
+        <NavLink tag={Link} to={'/profile'}>
             <NavItem>
-                <Glyphicon glyph='shopping-cart' /> Cart
+              <i className='fa faUser' /> Profile
             </NavItem>
-        </LinkContainer>
-        <LinkContainer to={'/profile'}>
+         </NavLink>
+         <NavLink tag={Link} to={'/fake'}>
             <NavItem>
-                <Glyphicon glyph='user' /> Profile
+              <i className='fa faHome'/> <span className="indicatorScreenSize">Admin</span>
             </NavItem>
-         </LinkContainer>
-         <LinkContainer to={'/fake'}>
-            <NavItem>
-                        <Glyphicon glyph='glyphicon glyphicon-cog' className="indicatorScreenSize"/> <span className="indicatorScreenSize">Admin</span>
-            </NavItem>
-         </LinkContainer>
+         </NavLink>
       </Nav>
     </Navbar.Collapse>
   </Navbar>
