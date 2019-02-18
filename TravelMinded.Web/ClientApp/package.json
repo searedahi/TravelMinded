@@ -21,6 +21,7 @@
     "connected-react-router": "^6.3.0"
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.0.0",
     "ajv": "^6.9.1",
     "cross-env": "^5.2.0",
     "eslint-config-react-app": "^3.0.7",

@@ -20,7 +20,7 @@ export const experienceDetailsActionCreators = {
     }
 };
 
-export const reducer = (state, action) => {
+export const experienceDetailsReducer = (state, action) => {
     state = state || initialState;
 
     if (action.type === requestExperienceDetailsType) {

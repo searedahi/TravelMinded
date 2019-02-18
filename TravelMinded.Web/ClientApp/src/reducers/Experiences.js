@@ -1,25 +1,10 @@
-﻿const requestExperiencesType = 'REQUEST_EXPERIENCES';
-const receiveExperiencesType = 'RECEIVE_EXPERIENCES';
-const requestExperiencesTypeAll = 'REQUEST_EXPERIENCES_ALL';
+﻿const requestExperiencesTypeAll = 'REQUEST_EXPERIENCES_ALL';
 const receiveExperiencesTypeAll = 'RECEIVE_EXPERIENCES_ALL';
 
-const initialState = { experiences: [], isLoading: false };
+const initialState = { experiences: [], isLoading: true };
 
-export const actionCreators = {
-    requestExperiences: startDateIndex => async (dispatch, getState) => {
-        if (startDateIndex === getState().experiences.startDateIndex) {
-            // Don't issue a duplicate request (we already have or are loading the requested data)
-            return;
-        }
+export const experienceActionCs = {
 
-        dispatch({ type: requestExperiencesType, startDateIndex });
-
-        const url = `api/Experience/AvailableAfter?startDateIndex=${startDateIndex}`;
-        const response = await fetch(url);
-        const experiences = await response.json();
-
-        dispatch({ type: receiveExperiencesType, startDateIndex, experiences });
-    },
 
     loadAllExperiences: () => async (dispatch, getState) => {
         dispatch({ type: requestExperiencesTypeAll });
@@ -32,40 +17,22 @@ export const actionCreators = {
     }
 };
 
-export const reducer = (state, action) => {
-    state = state || initialState;
+export const experienceReducer = (state = initialState, action) => {
 
-    if (action.type === requestExperiencesType) {
-        return {
-            ...state,
-            startDateIndex: action.startDateIndex,
-            isLoading: true
-        };
+    switch (action.type) {
+
+        case requestExperiencesTypeAll:
+            return {
+                ...state,
+                isLoading: true
+            };
+        case receiveExperiencesTypeAll:
+            return {
+                ...state,
+                isLoading: false,
+                experiences: action.experiences
+            };
+        default:
+            return state;
     }
-
-    if (action.type === receiveExperiencesType) {
-        return {
-            ...state,
-            startDateIndex: action.startDateIndex,
-            experiences: action.experiences,
-            isLoading: false
-        };
-    }
-
-    if (action.type === requestExperiencesTypeAll) {
-        return {
-            ...state,
-            isLoading: true
-        };
-    }
-
-    if (action.type === receiveExperiencesTypeAll) {
-        return {
-            ...state,
-            experiences: action.experiences,
-            isLoading: false
-        };
-    }
-
-    return state;
 };
