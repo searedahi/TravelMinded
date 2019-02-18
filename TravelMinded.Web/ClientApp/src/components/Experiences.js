@@ -61,6 +61,8 @@ const items = [
 
 
 
+
+
 function renderExperiencesTable(experiences) {
     console.log(experiences.experiences);
     if (experiences.experiences === undefined || experiences.experiences.length == 0) {
