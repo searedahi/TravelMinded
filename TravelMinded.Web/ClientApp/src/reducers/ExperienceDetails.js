@@ -5,7 +5,9 @@ const initialState = { experienceDetails: {}, isLoading: false };
 
 export const experienceDetailsActionCreators = {
     getExperienceDetails: id => async (dispatch, getState) => {
-        if (id === getState().experienceDetails.id) {
+
+        const expDets = getState().experienceDetails;
+        if (expDets !== undefined && id === expDets.id) {
             // Don't issue a duplicate request (we already have or are loading the requested data)
             return;
         }

@@ -18,7 +18,7 @@ class ExperienceDetails extends Component {
     render() {
         return (
             <section>
-                {renderSpotlightCarousel(this.props.experienceDetails)}
+                {renderSpotlightImage(this.props.experienceDetails)}
                 {renderExperienceInfoAndAvail(this.props.experienceDetails)}
                 {renderTravelMindedTips(this.props.experienceDetails)}
             </section>
@@ -42,7 +42,7 @@ const activeDates = [
 function renderExperienceInfoAndAvail(experienceDetails) {
 
     let todaysDate = new Date(2019, 0, 1);
-    if (experienceDetails.nextAvailableDate !== undefined) {
+    if (experienceDetails !== undefined && experienceDetails.nextAvailableDate !== undefined) {
         var serverDate = new Date(experienceDetails.nextAvailableDate);
         todaysDate = serverDate;
     }
@@ -52,7 +52,7 @@ function renderExperienceInfoAndAvail(experienceDetails) {
         experienceDetails.availabilities.map(ava => availableDates.push(new Date(Date.parse(ava.startAt))));
     }
 
-    if (experienceDetails.customerPrototypes === undefined) {
+    if (experienceDetails === undefined || experienceDetails.customerPrototypes === undefined) {
         return (<Row><Col>NO DATA</Col></Row>);
     } else {
         return (
@@ -142,6 +142,36 @@ function renderSpotlightCarousel(experienceDetails) {
     );
 }
 
+function renderSpotlightImage(experienceDetails) {
+
+    if (experienceDetails === undefined || experienceDetails.images === undefined) {
+        return (
+                <img
+                    key="123"
+                    className="experienceDetailsImg"
+                    alt="A generic snapshot of the experience."
+                    src="https://cdn.cnn.com/cnnnext/dam/assets/151030143154-burt-reynolds-smokey-and-the-bandit-full-169.jpg" />
+        );
+    }
+
+    var img1 = experienceDetails.images[0];
+
+
+    return (
+        <Row className="experienceDetailImagesRow">
+            <Col sm={12} md={12} lg={12} className="experienceDetailImagesCol">
+                <img
+                    className="experienceDetailsImg"
+                    alt="A generic snapshot of the experience."
+                    src={img1.imageCdnUrl === '' ? 'https://cdn.cnn.com/cnnnext/dam/assets/151030143154-burt-reynolds-smokey-and-the-bandit-full-169.jpg' : img1.imageCdnUrl} />
+                <div className="experienceDetailsSpotlight" >
+                    <h2>{experienceDetails.name}</h2>
+                </div>
+            </Col>
+        </Row>
+    );
+}
+
 function renderExperienceImages(experienceDetails) {
 
     if (experienceDetails.images === undefined) {
@@ -186,7 +216,7 @@ function renderCompanyName(experienceDetails) {
 
 function renderTravelMindedTips(experienceDetails) {
 
-    if (experienceDetails.proTips === undefined) {
+    if (experienceDetails === undefined || experienceDetails.proTips === undefined) {
         return (
             <p>No pro tips</p>
         );

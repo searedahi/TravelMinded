@@ -5,10 +5,7 @@ import { Link } from 'react-router-dom';
 import { experienceActionCs } from '../reducers/Experiences';
 import './Experiences.css';
 import ImageCarousel from './ImageCarousel';
-import {
-    Col,
-    Row
-} from 'reactstrap';
+import { Col, Row, Button } from 'reactstrap';
 
 
 class Experiences extends Component {
@@ -34,19 +31,21 @@ class Experiences extends Component {
 
 
 function renderExperiencesTable(experiences) {
-    console.log(experiences.experiences);
     if (experiences.experiences === undefined || experiences.experiences.length == 0) {
         return (<Row>No experiences</Row>);
     }
     else {
-        var experience = experiences.experiences[0];
+        var experiencesList = experiences.experiences;
 
         return (
-            <Row>
-                <Col sm={12} md={6} lg={4} className="fullWidthColumn">
-                    <ImageCarousel />
-                </Col>
-            </Row>
+
+            experiencesList.map(exper => 
+                <Row>
+                    <Col sm={12} md={6} lg={4} className="fullWidthColumn">
+                        <Button tag={Link} to={`/experience/${exper.id}`} />
+                    </Col>
+                </Row>
+            )
         );
     }
 }
