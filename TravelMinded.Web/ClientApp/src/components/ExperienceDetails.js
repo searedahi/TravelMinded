@@ -233,8 +233,15 @@ function renderTravelMindedTips(experienceDetails) {
     );
 }
 
+/*
+map state to props
+*/
+const mapStateToProps = state => ({
+    experienceDetails: state.experienceDetails,
+    isLoading: state.isLoading
+});
 
 export default connect(
-    state => state.experienceDetails,
+    mapStateToProps,
     dispatch => bindActionCreators(experienceDetailsActionCreators, dispatch)
 )(ExperienceDetails);
