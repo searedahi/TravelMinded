@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { experienceDetailsActionCreators } from '../reducers/ExperienceDetails';
-import { Col, Row, Carousel, Button } from 'reactstrap';
+import { getExperienceDetails } from '../actions/ExperienceDetailsActions';
+import { addCTLI, removeCTLI } from '../actions/CustomerTypeLineItem';
+import { Col, Row, Carousel, Fade } from 'reactstrap';
 import './ExperienceDetails.css';
 import CustomerTypeLineItem from './CustomerTypeLineItem';
 
@@ -16,11 +17,13 @@ class ExperienceDetails extends Component {
     }
 
     render() {
+        const experienceDetails = this.props.experienceDetails.experienceDetails;
+
         return (
             <section>
-                {renderSpotlightImage(this.props.experienceDetails)}
-                {renderExperienceInfoAndAvail(this.props.experienceDetails)}
-                {renderTravelMindedTips(this.props.experienceDetails)}
+                {renderSpotlightImage(experienceDetails)}
+                {renderExperienceInfoAndAvail(experienceDetails)}
+                {renderTravelMindedTips(experienceDetails)}
             </section>
         );
     }
@@ -69,7 +72,7 @@ function renderExperienceInfoAndAvail(experienceDetails) {
                 </Col>
                 <Col sm={12} md={4} lg={4}>
                     {experienceDetails.customerPrototypes.map(cType =>
-                        <CustomerTypeLineItem customerType={cType} />
+                        <CustomerTypeLineItem customerType={cType} key={cType.pk} />
                     )}
 
                 </Col>
@@ -144,15 +147,40 @@ function renderSpotlightCarousel(experienceDetails) {
 
 function renderSpotlightImage(experienceDetails) {
 
-    if (experienceDetails === undefined || experienceDetails.images === undefined) {
-        return (
-                <img
-                    key="123"
-                    className="experienceDetailsImg"
-                    alt="A generic snapshot of the experience."
-                    src="https://cdn.cnn.com/cnnnext/dam/assets/151030143154-burt-reynolds-smokey-and-the-bandit-full-169.jpg" />
-        );
+    if (experienceDetails === undefined
+        || experienceDetails.images === undefined
+        || experienceDetails.images.length == 0) {
+
+
+
+        if (experienceDetails.imageCdnUrl !== undefined) {
+            return (
+                <Fade in={true} key="123"
+>
+                    <img
+                        className="experienceDetailsImg"
+                        alt="A generic snapshot of the experience."
+                        src={experienceDetails.imageCdnUrl}
+
+                    />
+                </Fade>
+            );
+        } else {
+
+            return (
+                <Fade in={true} key="123"
+>
+                    <img
+                        className="experienceDetailsImg"
+                        alt="A generic snapshot of the experience."
+                        src="https://cdn.cnn.com/cnnnext/dam/assets/151030143154-burt-reynolds-smokey-and-the-bandit-full-169.jpg"
+
+                    />
+                </Fade>
+            );
+        }
     }
+
 
     var img1 = experienceDetails.images[0];
 
@@ -160,10 +188,13 @@ function renderSpotlightImage(experienceDetails) {
     return (
         <Row className="experienceDetailImagesRow">
             <Col sm={12} md={12} lg={12} className="experienceDetailImagesCol">
-                <img
-                    className="experienceDetailsImg"
-                    alt="A generic snapshot of the experience."
-                    src={img1.imageCdnUrl === '' ? 'https://cdn.cnn.com/cnnnext/dam/assets/151030143154-burt-reynolds-smokey-and-the-bandit-full-169.jpg' : img1.imageCdnUrl} />
+                <Fade in={true}>
+                    <img
+                        className="experienceDetailsImg"
+                        alt="A generic snapshot of the experience."
+                        src={img1.imageCdnUrl === '' ? 'https://cdn.cnn.com/cnnnext/dam/assets/151030143154-burt-reynolds-smokey-and-the-bandit-full-169.jpg' : img1.imageCdnUrl} />
+                </Fade>
+
                 <div className="experienceDetailsSpotlight" >
                     <h2>{experienceDetails.name}</h2>
                 </div>
@@ -176,9 +207,8 @@ function renderExperienceImages(experienceDetails) {
 
     if (experienceDetails.images === undefined) {
         return (
-            <Carousel.Item className="carouselItemWrapper">
+            <Carousel.Item className="carouselItemWrapper" key="123">
                 <img
-                    key="123"
                     className="experienceDetailsImg"
                     alt="A generic snapshot of the experience."
                     src="https://cdn.cnn.com/cnnnext/dam/assets/151030143154-burt-reynolds-smokey-and-the-bandit-full-169.jpg" />
@@ -243,5 +273,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    dispatch => bindActionCreators(experienceDetailsActionCreators, dispatch)
+    dispatch => bindActionCreators({ addCTLI, removeCTLI }, getExperienceDetails, dispatch)
 )(ExperienceDetails);

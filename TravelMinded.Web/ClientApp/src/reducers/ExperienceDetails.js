@@ -1,45 +1,43 @@
-﻿const requestExperienceDetailsType = 'REQUEST_EXPERIENCE_DETAILS';
-const receiveExperienceDetailsType = 'RECEIVE_EXPERIENCE_DETAILS';
+﻿import {
+    FETCH_EXPERIENCE_DETAILS_BEGIN,
+    FETCH_EXPERIENCE_DETAILS_SUCCESS,
+    FETCH_EXPERIENCE_DETAILS_FAILURE,
+} from '../actions/ExperienceDetailsActions';
 
-const initialState = { experienceDetails: {}, isLoading: false };
-
-export const experienceDetailsActionCreators = {
-    getExperienceDetails: id => async (dispatch, getState) => {
-
-        const expDets = getState().experienceDetails;
-        if (expDets !== undefined && id === expDets.id) {
-            // Don't issue a duplicate request (we already have or are loading the requested data)
-            return;
-        }
-
-        dispatch({ type: requestExperienceDetailsType, id });
-
-        const url = `api/Experience/${id}`;
-        const response = await fetch(url);
-        const experienceDetails = await response.json();
-
-        dispatch({ type: receiveExperienceDetailsType, experienceDetails });
-    }
+const initialState = {
+    experienceDetails: {},
+    isLoading: false,
+    tixToBuy: [],
 };
 
-export const experienceDetailsReducer = (state, action) => {
-    state = state || initialState;
+const ExperienceDetailsReducer = (state, action) => {
+    const scopedState = state || initialState;
 
-    if (action.type === requestExperienceDetailsType) {
+    if (action.type === FETCH_EXPERIENCE_DETAILS_BEGIN) {
         return {
-            ...state,
+            ...scopedState,
             id: action.id,
-            isLoading: true
+            isLoading: true,
         };
     }
 
-    if (action.type === receiveExperienceDetailsType) {
+    if (action.type === FETCH_EXPERIENCE_DETAILS_SUCCESS) {
         return {
-            ...state,
+            ...scopedState,
             experienceDetails: action.experienceDetails,
-            isLoading: false
+            isLoading: false,
+        };
+    }
+
+    if (action.type === FETCH_EXPERIENCE_DETAILS_FAILURE) {
+        return {
+            ...scopedState,
+            error: action.error,
+            isLoading: false,
         };
     }
 
     return state;
 };
+
+export default ExperienceDetailsReducer;

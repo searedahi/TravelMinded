@@ -24,25 +24,28 @@ class Experiences extends Component {
 
     render() {
         return (
-            renderExperiencesTable(this.props.experiences)
+            renderExperiencesTable(this.props.experiences.experiences)
         );
     }
 }
 
 
 function renderExperiencesTable(experiences) {
-    if (experiences.experiences === undefined || experiences.experiences.length == 0) {
+    if (experiences === undefined || experiences.length == 0) {
         return (<Row>No experiences</Row>);
     }
-    else {
-        var experiencesList = experiences.experiences;
-
+    else
+    {
         return (
 
-            experiencesList.map(exper => 
-                <Row>
+            experiences.map(exper =>
+                <Row key={exper.id}> 
                     <Col sm={12} md={6} lg={4} className="fullWidthColumn">
-                        <Button tag={Link} to={`/experience/${exper.id}`} />
+                        <Link to={`/experience/${exper.id}`} >
+                            <div style={{ backgroundImage: `url(${exper.imageCdnUrl})` }}>
+                                <h3> {exper.name}</h3>
+                            </div>
+                        </Link>
                     </Col>
                 </Row>
             )
