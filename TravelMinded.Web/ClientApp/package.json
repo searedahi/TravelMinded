@@ -9,6 +9,8 @@
     "history": "^4.7.2",
     "install-peerdeps": "^1.10.2",
     "jquery": "^3.3.1",
+    "node-fetch": "^2.3.0",
+    "prop-types": "^15.7.2",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
     "react-number-format": "^4.0.6",
@@ -39,7 +41,18 @@
     "extends": "airbnb",
     "rules": {
       "linebreak-style": 0,
-      "indent": 0
+      "indent": [
+        "error",
+        4
+      ],
+      "react/jsx-indent": [
+        "error",
+        4
+      ],
+      "react/jsx-indent-props": [
+        "error",
+        4
+      ]
     }
   },
   "scripts": {

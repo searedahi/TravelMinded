@@ -1,13 +1,13 @@
 ﻿import { combineReducers } from 'redux';
-import { experienceReducer } from './Experiences';
-import { experienceDetailsReducer } from './ExperienceDetails';
-import { customerTypeLineItemReducer } from './CustomerTypeLineItem';
+import experiencesReducer from './ExperiencesReducer';
+import experienceDetailsReducer from './ExperienceDetailsReducer';
+import customerTypeLineItemReducer from './CustomerTypeLineItemReducer';
 
 
 const rootReducer = combineReducers({
-    experiences: experienceReducer,
+    experiences: experiencesReducer,
     experienceDetails: experienceDetailsReducer,
-    customerTypeLineItem: customerTypeLineItemReducer
-})
+    customerTypeLineItem: customerTypeLineItemReducer,
+});
 
-export default rootReducer
+export default rootReducer;

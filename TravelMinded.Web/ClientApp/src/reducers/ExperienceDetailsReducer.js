@@ -10,12 +10,10 @@ const initialState = {
     tixToBuy: [],
 };
 
-const ExperienceDetailsReducer = (state, action) => {
-    const scopedState = state || initialState;
-
+const experienceDetailsReducer = (state = initialState, action) => {
     if (action.type === FETCH_EXPERIENCE_DETAILS_BEGIN) {
         return {
-            ...scopedState,
+            ...state,
             id: action.id,
             isLoading: true,
         };
@@ -23,7 +21,7 @@ const ExperienceDetailsReducer = (state, action) => {
 
     if (action.type === FETCH_EXPERIENCE_DETAILS_SUCCESS) {
         return {
-            ...scopedState,
+            ...state,
             experienceDetails: action.experienceDetails,
             isLoading: false,
         };
@@ -31,7 +29,7 @@ const ExperienceDetailsReducer = (state, action) => {
 
     if (action.type === FETCH_EXPERIENCE_DETAILS_FAILURE) {
         return {
-            ...scopedState,
+            ...state,
             error: action.error,
             isLoading: false,
         };
@@ -40,4 +38,4 @@ const ExperienceDetailsReducer = (state, action) => {
     return state;
 };
 
-export default ExperienceDetailsReducer;
+export default experienceDetailsReducer;

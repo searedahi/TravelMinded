@@ -1,12 +1,17 @@
-﻿export const REQUEST_EXPERIENCES_ALL_TYPE = 'REQUEST_EXPERIENCES_ALL';
-export const RECEIEVE_EXPERIENCES_ALL_TYPE = 'RECEIEVE_EXPERIENCES_ALL';
+﻿export const FETCH_EXPERIENCES_BEGIN = 'FETCH_EXPERIENCES_BEGIN';
+export const FETCH_EXPERIENCES_SUCCESS = 'FETCH_EXPERIENCES_SUCCESS';
+export const FETCH_EXPERIENCES_FAILURE = 'FETCH_EXPERIENCES_FAILURE';
 
-export function loadAllExperiences() {
-    dispatch({ type: REQUEST_EXPERIENCES_ALL_TYPE });
+export const fetchExperiencesBegin = () => ({
+    type: FETCH_EXPERIENCES_BEGIN,
+});
 
-    const url = `api/Experience/All`;
-    const response = fetch(url);
-    const experiences = response.json();
+export const fetchExperiencesSuccess = experiences => ({
+    type: FETCH_EXPERIENCES_SUCCESS,
+    experiences,
+});
 
-    dispatch({ type: RECEIEVE_EXPERIENCES_ALL_TYPE, experiences });
-}
+export const fetchExperiencesFailure = error => ({
+    type: FETCH_EXPERIENCES_FAILURE,
+    error,
+});

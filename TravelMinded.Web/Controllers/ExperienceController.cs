@@ -7,11 +7,11 @@ namespace TravelMinded.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ExperienceController : ControllerBase
+    public class ExperiencesController : ControllerBase
     {
         private TravelMindedRepository travelMindedService;
         
-        public ExperienceController() {
+        public ExperiencesController() {
             travelMindedService = TravelMindedServiceFactory.CreateTravelMindedService();
         }
 

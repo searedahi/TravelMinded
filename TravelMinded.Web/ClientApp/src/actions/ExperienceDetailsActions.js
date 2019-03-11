@@ -2,23 +2,17 @@
 export const FETCH_EXPERIENCE_DETAILS_SUCCESS = 'FETCH_EXPERIENCE_DETAILS_SUCCESS';
 export const FETCH_EXPERIENCE_DETAILS_FAILURE = 'FETCH_EXPERIENCE_DETAILS_FAILURE';
 
-export const RECEIEVE_EXPERIENCE_DETAILS_TYPE = 'RECEIVE_EXPERIENCE_DETAILS';
-
-
-export function getExperienceDetails(id) {
-    return { type: FETCH_EXPERIENCE_DETAILS_BEGIN, id };
-}
-
-export const fetchExperienceDetailsBegin = () => ({
+export const fetchExperienceDetailsBegin = experienceId => ({
     type: FETCH_EXPERIENCE_DETAILS_BEGIN,
+    experienceId,
 });
 
-export const fetchExperienceDetailsSuccess = experience => ({
+export const fetchExperienceDetailsSuccess = experienceDetails => ({
     type: FETCH_EXPERIENCE_DETAILS_SUCCESS,
-    payload: { experience },
+    experienceDetails,
 });
 
 export const fetchExperienceDetailsFailure = error => ({
     type: FETCH_EXPERIENCE_DETAILS_FAILURE,
-    payload: { error },
+    error,
 });
