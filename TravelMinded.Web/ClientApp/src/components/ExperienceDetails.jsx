@@ -2,6 +2,7 @@ import { Col, Row, Fade } from 'reactstrap';
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import fetch from 'node-fetch';
 import { fetchExperienceDetailsBegin, fetchExperienceDetailsSuccess } from '../actions/ExperienceDetailsActions';
 import { incrementCTLI, decrementCTLI } from '../actions/CustomerTypeLineItemActions';
 import './ExperienceDetails.css';
@@ -12,7 +13,7 @@ function renderCompanyName(experienceDetails) {
         return (<span className="experienceDetailsCompany">by Geeky Tours</span>);
     }
 
-    const { company } = experienceDetails.company;
+    const { company } = experienceDetails;
 
     return (
         <span className="experienceDetailsCompany"> by {company.name}</span>
@@ -28,7 +29,8 @@ function renderExperienceInfoAndAvail(experienceDetails) {
     const availableDates = [];
     if (experienceDetails !== undefined && experienceDetails.availabilities !== undefined) {
         experienceDetails.availabilities.map(
-            ava => availableDates.push(new Date(Date.parse(ava.startAt))));
+            ava => availableDates.push(new Date(Date.parse(ava.startAt))),
+        );
     }
 
     if (experienceDetails === undefined || experienceDetails.customerPrototypes === undefined) {
@@ -103,7 +105,8 @@ function renderSpotlightImage(experienceDetails) {
                     <img
                         className="experienceDetailsImg"
                         alt="A generic snapshot of the experience."
-                        src={img1.imageCdnUrl === '' ? 'https://cdn.cnn.com/cnnnext/dam/assets/151030143154-burt-reynolds-smokey-and-the-bandit-full-169.jpg' : img1.imageCdnUrl} />
+                        src={img1.imageCdnUrl === '' ? 'https://cdn.cnn.com/cnnnext/dam/assets/151030143154-burt-reynolds-smokey-and-the-bandit-full-169.jpg' : img1.imageCdnUrl}
+                    />
                 </Fade>
 
                 <div className="experienceDetailsSpotlight">
@@ -115,7 +118,9 @@ function renderSpotlightImage(experienceDetails) {
 }
 
 function renderTravelMindedTips(experienceDetails) {
-    if (experienceDetails === undefined || experienceDetails.proTips === undefined) {
+    if (experienceDetails === undefined
+        || experienceDetails.proTips === undefined
+        || experienceDetails.proTips.length === 0) {
         return (
             <p>No pro tips</p>
         );
@@ -133,25 +138,28 @@ function renderTravelMindedTips(experienceDetails) {
 
 
 class ExperienceDetails extends Component {
-    fetchById = async (experienceId) => {
-        const url = `api/Experience/${experienceId}`;
-        const response = await fetch(url);
-        const experienceDetails = await response.json();
-        return experienceDetails;
-    }
-
     componentWillMount() {
         const scopedProps = this.props;
 
         const experienceId = parseInt(scopedProps.match.params.id, 10) || 0;
+
+        this.fetchById(experienceId);
+    }
+
+    async fetchById(experienceId) {
+        const scopedProps = this.props;
+
         scopedProps.fetchExperienceDetailsBegin(experienceId);
 
-        const experienceDetails = this.fetchById(experienceId);
-        scopedProps.fetchExperienceDetailsSuccess(experienceDetails);
+        const url = `api/ExperienceDetails/${experienceId}`;
+        const tmApiResp = await fetch(url);
+        const expDets = await tmApiResp.json();
+
+        scopedProps.fetchExperienceDetailsSuccess(expDets);
     }
 
     render() {
-        const { experienceDetails } = this.props;
+        const { experienceDetails: { experienceDetails } } = this.props;
 
         return (
             <section>
@@ -172,8 +180,12 @@ const mapStateToProps = state => ({
 export default connect(
     mapStateToProps,
     dispatch => bindActionCreators(
-        { incrementCTLI, decrementCTLI },
-        { fetchExperienceDetailsBegin, fetchExperienceDetailsSuccess },
+        {
+            incrementCTLI,
+            decrementCTLI,
+            fetchExperienceDetailsBegin,
+            fetchExperienceDetailsSuccess,
+        },
         dispatch,
     ),
 )(ExperienceDetails);

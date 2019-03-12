@@ -33,13 +33,13 @@ class CustomerTypeLineItem extends Component {
     }
 
     render() {
-        const { customerType: { customerType } } = this.props;
+        const { customerType } = this.props;
+        const { displayName } = customerType;
+        const { pk } = customerType;
+        const { total } = customerType;
 
-        const { displayName } = customerType.displayName;
-        const { pk } = customerType.pk;
-        const { total } = customerType.total;
-        const { quantity: { quantity } } = this.props;
-
+        const { customerTypeLineItem } = this.props;
+        const { quantity } = customerTypeLineItem;
         const htmlToRender = (
             <div>
                 <Row>
@@ -55,11 +55,11 @@ class CustomerTypeLineItem extends Component {
                         <div className="headcountPicker">
                             <InputGroup>
                                 <InputGroupAddon addonType="prepend">
-                                    <Button color="danger" style={{ opacity: 0.5 }} onClick={this.handleClick}> - </Button>
+                                    <Button color="danger" style={{ opacity: 0.5 }} onClick={this.decrementClick}> - </Button>
                                 </InputGroupAddon>
-                                <Input type={Number} placeholder="0">{quantity}</Input>
+                                <Input value={quantity} />
                                 <InputGroupAddon addonType="append">
-                                    <Button color="success" style={{ opacity: 0.5 }} onClick={this.handleClick}> + </Button>
+                                    <Button color="success" style={{ opacity: 0.5 }} onClick={this.incrementClick}> + </Button>
                                 </InputGroupAddon>
                             </InputGroup>
                         </div>
@@ -78,6 +78,9 @@ CustomerTypeLineItem.propTypes = {
         displayName: PropTypes.string,
         total: PropTypes.number,
     }).isRequired,
+    customerTypeLineItem: PropTypes.shape({
+        quantity: PropTypes.number,
+    }),
     quantity: PropTypes.number,
 };
 
