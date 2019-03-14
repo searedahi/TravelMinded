@@ -8,7 +8,7 @@ const initialState = {
     quantity: 0,
 };
 
-const customerTypeLineItemReducer = (state = initialState, action) => {
+const customerTypeLineItem = (state = initialState, action) => {
     if (action.type === INCREMENT_CTLI) {
         return {
             ...state,
@@ -28,4 +28,4 @@ const customerTypeLineItemReducer = (state = initialState, action) => {
     return state;
 };
 
-export default customerTypeLineItemReducer;
+export default customerTypeLineItem;

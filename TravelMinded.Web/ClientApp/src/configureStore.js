@@ -1,13 +1,13 @@
-﻿import { createBrowserHistory } from 'history'
-import { applyMiddleware, compose, createStore } from 'redux'
-import { routerMiddleware } from 'connected-react-router'
-import createRootReducer from './reducers'
+﻿import { createBrowserHistory } from 'history';
+import { applyMiddleware, compose, createStore } from 'redux';
+import { routerMiddleware } from 'connected-react-router';
+import createRootReducer from './reducers';
 
-export const history = createBrowserHistory()
+export const history = createBrowserHistory();
 
 
 export default function configureStore(preloadedState) {
-    const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+    const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
     const store = createStore(
         createRootReducer(history),
         preloadedState,
@@ -16,7 +16,7 @@ export default function configureStore(preloadedState) {
                 routerMiddleware(history),
             ),
         ),
-    )
+    );
 
     // Hot reloading
     if (module.hot) {
@@ -26,5 +26,5 @@ export default function configureStore(preloadedState) {
         });
     }
 
-    return store
+    return store;
 }

@@ -39,7 +39,7 @@ class CustomerTypeLineItem extends Component {
         const { total } = customerType;
 
         const { customerTypeLineItem } = this.props;
-        const { quantity } = customerTypeLineItem;
+        const { quantity } = this.props;
         const htmlToRender = (
             <div>
                 <Row>
@@ -92,8 +92,7 @@ const mapStateToProps = (state, ownProps) => ({
     ...state,
     isLoading: state.isLoading,
     customerType: ownProps.customerType,
-    quantity: state.quantity,
-    tixToBuy: state.tixToBuy,
+    quantity: ownProps.quantity,
 });
 
 export default connect(

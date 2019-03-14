@@ -6,7 +6,7 @@
 
 const initialState = { experiences: [], isLoading: true };
 
-const experiencesReducer = (state = initialState, action) => {
+const experiences = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_EXPERIENCES_BEGIN:
             return {
@@ -30,4 +30,4 @@ const experiencesReducer = (state = initialState, action) => {
     }
 };
 
-export default experiencesReducer;
+export default experiences;

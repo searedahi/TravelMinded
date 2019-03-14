@@ -6,7 +6,7 @@ import fetch from 'node-fetch';
 import { fetchExperienceDetailsBegin, fetchExperienceDetailsSuccess } from '../actions/ExperienceDetailsActions';
 import { incrementCTLI, decrementCTLI } from '../actions/CustomerTypeLineItemActions';
 import './ExperienceDetails.css';
-import CustomerTypeLineItem from './CustomerTypeLineItem';
+import BookingCalculator from './BookingCalculator';
 
 function renderCompanyName(experienceDetails) {
     if (experienceDetails.company === undefined) {
@@ -57,11 +57,8 @@ function renderExperienceInfoAndAvail(experienceDetails) {
             </Col>
             <Col sm={12} md={4} lg={4}>
                 {
-                    experienceDetails
-                        .customerPrototypes
-                        .map(cType => (
-                            <CustomerTypeLineItem customerType={cType} key={cType.pk} />
-                        ))}
+                    <BookingCalculator experienceDetails={experienceDetails} />
+                }
             </Col>
         </Row>
     );
@@ -163,9 +160,9 @@ class ExperienceDetails extends Component {
 
         return (
             <section>
-                {renderSpotlightImage(experienceDetails)}
-                {renderExperienceInfoAndAvail(experienceDetails)}
-                {renderTravelMindedTips(experienceDetails)}
+                { renderSpotlightImage(experienceDetails) }
+                { renderExperienceInfoAndAvail(experienceDetails) }
+                { renderTravelMindedTips(experienceDetails) }
             </section>
         );
     }

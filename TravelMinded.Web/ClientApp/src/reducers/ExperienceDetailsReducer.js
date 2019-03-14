@@ -10,7 +10,7 @@ const initialState = {
     tixToBuy: [],
 };
 
-const experienceDetailsReducer = (state = initialState, action) => {
+const experienceDetails = (state = initialState, action) => {
     if (action.type === FETCH_EXPERIENCE_DETAILS_BEGIN) {
         return {
             ...state,
@@ -38,4 +38,4 @@ const experienceDetailsReducer = (state = initialState, action) => {
     return state;
 };
 
-export default experienceDetailsReducer;
+export default experienceDetails;
